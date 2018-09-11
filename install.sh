@@ -1,7 +1,5 @@
 #! /bin/bash
-
-IMAGE_ID="lfoppiano/grobid"
-IMAGE_VERSION="0.5.1"
+source ./variables.sh
 
 PIPENV_PRESENT=$(which pipenv)
 OSX=$(which brew)
