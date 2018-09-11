@@ -32,3 +32,11 @@ docker run -t --rm --init --name grobid -p 8080:8070 -p 8081:8071 lfoppiano/grob
 ```
 
 This will host the service on `localhost:8080`.
+
+## Run extraction
+
+Run the `full_text_extract.py` to extract out the text from PDF. This can be done by:
+
+```
+pipenv run python full_text_extract.py -h
+```
