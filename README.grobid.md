@@ -7,12 +7,15 @@ Use the script `install.sh` to set up `pipenv` and pull the latest Docker image 
 
 Alternately, you can also set up `pipenv` manually.
 
+Note: you have to have python3.6 in order to run this program
 ```
 # Mac OS
 brew install pipenv
 
 # Pip Installation
-pip install --user pipenv
+pip3 install --user pipenv # install pipenv in the local directory
+
+pip3 install  pipenv # needs sudoer permission
 ```
 
 The Grobid Docker container can be set up using the commands
