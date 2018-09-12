@@ -43,3 +43,9 @@ Run the `full_text_extract.py` to extract out the text from PDF. This can be don
 ```
 pipenv run python full_text_extract.py -h
 ```
+before run this scripts, you need to use pipenv to install all requested packages.
+
+```
+pipenv install requests bs4 lxml
+
+```

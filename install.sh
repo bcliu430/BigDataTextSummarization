@@ -9,7 +9,7 @@ if [ -z "$PIPENV_PRESENT" ]; then
   else
     PIP=$(which pip)
     if [ ! -z "$PIP" ]; then
-      pip install --user pipenv
+      sudo pip3 install pipenv
     else
       echo "Cannot install pipenv. No suitable brew or pip environment found.";
       exit -1
@@ -24,3 +24,6 @@ then
 else
   echo "No docker installation present. Please install Docker before continuing"
 fi
+
+# install dependencies
+pipenv install lxml bs4 requests
