@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
-# source ./variables.sh
+source ./variables.sh
 
 start_grobid() {
   # Update image if needed
