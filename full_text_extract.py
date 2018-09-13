@@ -20,8 +20,8 @@ def process_xml(text):
 
 
 def write_output(xml_text, raw_text, output_file):
-    text_output_file = '.'.join(output_file.split('.')[:-1]) + '.txt'
-    xml_output_file = '.'.join(output_file.split('.')[:-1]) + '.xml'
+    text_output_file = output_file + '.txt'
+    xml_output_file = output_file + '.xml'
     with open(text_output_file, 'w') as fwriter:
         fwriter.write(raw_text)
     with open(xml_output_file, 'w') as fwriter:
