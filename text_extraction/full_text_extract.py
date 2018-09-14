@@ -42,6 +42,17 @@ def parse_pdf(pdf_file, output_dir):
     write_output(xml_text, raw_text, pdf_file, output_dir)
 
 
+def parse_pdfs(pdf_files, output_dir):
+    parse_pdf_partial = partial(parse_pdf, output_dir=output_dir)
+    with Pool(cpu_count()) as pool:
+        with tqdm(total=len(pdf_files)) as pbar:
+            for i, _ in tqdm(
+                    enumerate(
+                        pool.imap_unordered(parse_pdf_partial,
+                                            pdf_files))):
+                pbar.update()
+
+
 def main():
     parser = ArgumentParser("GROBID CLI")
     group = parser.add_mutually_exclusive_group(required=True)
@@ -54,14 +65,7 @@ def main():
         parse_pdf(args.pdf_file, args.output)
     else:
         pdf_files = get_pdfs(args.directory)
-        parse_pdf_partial = partial(parse_pdf, output_dir=args.output)
-        with Pool(cpu_count()) as pool:
-            with tqdm(total=len(pdf_files)) as pbar:
-                for i, _ in tqdm(
-                        enumerate(
-                            pool.imap_unordered(parse_pdf_partial,
-                                                pdf_files))):
-                    pbar.update()
+        parse_pdfs(pdf_files, args.output)
 
 
 if __name__ == "__main__":
