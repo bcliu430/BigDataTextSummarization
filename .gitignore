@@ -1,3 +1,4 @@
 *.swp
 data/team10
-data/*
+data/parsed_text
+.DS_Store
