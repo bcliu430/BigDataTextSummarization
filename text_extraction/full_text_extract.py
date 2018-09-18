@@ -8,6 +8,7 @@ from tqdm import tqdm
 from multiprocessing import Pool, cpu_count
 
 from constants import API_URL, PDF_EXTENSION
+from utils import verboseprint
 
 
 def get_pdfs(directory):
@@ -28,8 +29,11 @@ def process_xml(text):
 
 
 def write_output(xml_text, raw_text, input_file, output_dir):
-    text_output_file = '%s.%s' % (input_file, 'txt')
-    xml_output_file = '%s.%s' % (input_file, 'xml')
+    base_filename = os.path.basename(input_file)
+    text_output_file = os.path.join(output_dir, f'{base_filename}.txt')
+    xml_output_file = os.path.join(output_dir, f'{base_filename}.xml')
+    verboseprint(f"Text output file for {input_file} is {text_output_file}")
+    verboseprint(f"XML output file for {input_file} is {xml_output_file}")
     with open(text_output_file, 'w') as fwriter:
         fwriter.write(raw_text)
     with open(xml_output_file, 'w') as fwriter:
@@ -37,9 +41,21 @@ def write_output(xml_text, raw_text, input_file, output_dir):
 
 
 def parse_pdf(pdf_file, output_dir):
+    verboseprint(f"Parsing PDF {pdf_file}")
     text = extract_full_text(pdf_file)
     raw_text, xml_text = process_xml(text)
     write_output(xml_text, raw_text, pdf_file, output_dir)
+
+
+def parse_pdfs(pdf_files, output_dir):
+    parse_pdf_partial = partial(parse_pdf, output_dir=output_dir)
+    with Pool(cpu_count()) as pool:
+        with tqdm(total=len(pdf_files)) as pbar:
+            for i, _ in tqdm(
+                    enumerate(
+                        pool.imap_unordered(parse_pdf_partial,
+                                            pdf_files))):
+                pbar.update()
 
 
 def main():
@@ -54,14 +70,7 @@ def main():
         parse_pdf(args.pdf_file, args.output)
     else:
         pdf_files = get_pdfs(args.directory)
-        parse_pdf_partial = partial(parse_pdf, output_dir=args.output)
-        with Pool(cpu_count()) as pool:
-            with tqdm(total=len(pdf_files)) as pbar:
-                for i, _ in tqdm(
-                        enumerate(
-                            pool.imap_unordered(parse_pdf_partial,
-                                                pdf_files))):
-                    pbar.update()
+        parse_pdfs(pdf_files, args.output)
 
 
 if __name__ == "__main__":
