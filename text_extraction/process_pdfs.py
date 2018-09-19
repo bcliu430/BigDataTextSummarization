@@ -16,10 +16,10 @@ def fetch_pdfs(input_dir):
     return glob(os.path.join(input_dir, "**", PDF_EXTENSION), recursive=True)
 
 
-def extract_text(input_dir, output_dir):
+def extract_text(input_dir, output_dir, num_processes):
     pdf_files = fetch_pdfs(input_dir)
     create_directory(output_dir)
-    parse_pdfs(pdf_files, output_dir)
+    parse_pdfs(pdf_files, output_dir, num_processes)
 
 
 def main():
@@ -34,11 +34,18 @@ def main():
         help="Output directory for text and XML outputs",
         required=False,
         default="../data/parsed_text/")
+    parser.add_argument(
+        "--proc", help="Number of processes", required=False, type=int)
     args = parser.parse_args()
     verboseprint(f"The input directory is {args.dir}")
     verboseprint(f"The output directory is {args.output}")
-    extract_text(args.dir, args.output)
+    if args.proc:
+        verboseprint(f"Using {args.proc} processes")
+        extract_text(args.dir, args.output, args.proc)
+    else:
+        verboseprint(f"Using default number of processes")
+        extract_text(args.dir, args.output, args.proc)
 
-    
+
 if __name__ == '__main__':
     main()

@@ -47,14 +47,13 @@ def parse_pdf(pdf_file, output_dir):
     write_output(xml_text, raw_text, pdf_file, output_dir)
 
 
-def parse_pdfs(pdf_files, output_dir):
+def parse_pdfs(pdf_files, output_dir, num_processes=cpu_count()):
     parse_pdf_partial = partial(parse_pdf, output_dir=output_dir)
-    with Pool(cpu_count()) as pool:
+    with Pool(num_processes) as pool:
         with tqdm(total=len(pdf_files)) as pbar:
             for i, _ in tqdm(
                     enumerate(
-                        pool.imap_unordered(parse_pdf_partial,
-                                            pdf_files))):
+                        pool.imap_unordered(parse_pdf_partial, pdf_files))):
                 pbar.update()
 
 
@@ -63,14 +62,18 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--pdf-file", help="Path to PDF File")
     group.add_argument("--directory", help="Path to directory with PDF files")
+    parser.add_argument("--proc", help="Number of processes to use")
     parser.add_argument(
-        "--output", help="Path to output directory", required=True)
+        "--output", help="Path to output directory", required=True, type=int)
     args = parser.parse_args()
     if args.pdf_file:
         parse_pdf(args.pdf_file, args.output)
     else:
         pdf_files = get_pdfs(args.directory)
-        parse_pdfs(pdf_files, args.output)
+        if args.proc:
+            parse_pdfs(pdf_files, args.output, args.proc)
+        else:
+            parse_pdfs(pdf_files, args.output)
 
 
 if __name__ == "__main__":
