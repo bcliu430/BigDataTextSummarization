@@ -21,12 +21,22 @@ def create_handler(handler_type):
         handler.setFormatter(FORMATTER)
         handler.setLevel(get_level(settings.LOG_LEVEL))
     elif handler_type == "file":
+        # Set file handler with level specified
         filename = settings.LOG_FILE
         handler = logging.FileHandler(filename)
         handler.setFormatter(FORMATTER)
         handler.setLevel(get_level(settings.LOG_LEVEL))
     else:
         handler = None
+    return handler
+
+
+def create_error_handler():
+    # Set file handler with only error messages
+    filename = settings.ERROR_FILE
+    handler = logging.FileHandler(filename)
+    handler.setFormatter(FORMATTER)
+    handler.setLevel(logging.ERROR)
     return handler
 
 
@@ -39,6 +49,8 @@ def setup_logger():
         handler = create_handler(handler_type)
         if handler is not None:
             logger.addHandler(handler)
+        if handler_type == "file":
+            logger.addHandler(create_error_handler())
 
     logger.setLevel(get_level(settings.LOG_LEVEL))
 
