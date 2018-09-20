@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 
 from constants import PDF_EXTENSION
 from full_text_extract import parse_pdfs
-from utils import verboseprint
+from utils import logger
 
 
 def create_directory(dirname):
@@ -37,13 +37,13 @@ def main():
     parser.add_argument(
         "--proc", help="Number of processes", required=False, type=int)
     args = parser.parse_args()
-    verboseprint(f"The input directory is {args.dir}")
-    verboseprint(f"The output directory is {args.output}")
+    logger.debug(f"The input directory is {args.dir}")
+    logger.debug(f"The output directory is {args.output}")
     if args.proc:
-        verboseprint(f"Using {args.proc} processes")
+        logger.debug(f"Using {args.proc} processes")
         extract_text(args.dir, args.output, args.proc)
     else:
-        verboseprint(f"Using default number of processes")
+        logger.debug(f"Using default number of processes")
         extract_text(args.dir, args.output, args.proc)
 
 

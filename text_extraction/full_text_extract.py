@@ -8,7 +8,7 @@ from tqdm import tqdm
 from multiprocessing import Pool, cpu_count
 
 from constants import API_URL, PDF_EXTENSION
-from utils import verboseprint
+from utils import logger
 
 
 def get_pdfs(directory):
@@ -18,6 +18,9 @@ def get_pdfs(directory):
 def extract_full_text(pdf_file):
     response = requests.post(
         API_URL, files=dict(input=open(pdf_file, 'rb').read()))
+    if not response.ok:
+        logger.error(f"Could not parse {pdf_file}")
+        return None
     return response.text
 
 
@@ -32,8 +35,9 @@ def write_output(xml_text, raw_text, input_file, output_dir):
     base_filename = os.path.basename(input_file)
     text_output_file = os.path.join(output_dir, f'{base_filename}.txt')
     xml_output_file = os.path.join(output_dir, f'{base_filename}.xml')
-    verboseprint(f"Text output file for {input_file} is {text_output_file}")
-    verboseprint(f"XML output file for {input_file} is {xml_output_file}")
+
+    logger.debug(f"Text output file for {input_file} is {text_output_file}")
+    logger.debug(f"XML output file for {input_file} is {xml_output_file}")
     with open(text_output_file, 'w') as fwriter:
         fwriter.write(raw_text)
     with open(xml_output_file, 'w') as fwriter:
@@ -41,8 +45,10 @@ def write_output(xml_text, raw_text, input_file, output_dir):
 
 
 def parse_pdf(pdf_file, output_dir):
-    verboseprint(f"Parsing PDF {pdf_file}")
+    logger.debug(f"Parsing PDF {pdf_file}")
     text = extract_full_text(pdf_file)
+    if text is None:
+        return
     raw_text, xml_text = process_xml(text)
     write_output(xml_text, raw_text, pdf_file, output_dir)
 

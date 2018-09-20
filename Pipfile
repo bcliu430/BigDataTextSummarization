@@ -9,6 +9,7 @@ uncurl = "*"
 "bs4" = "*"
 lxml = "*"
 tqdm = "*"
+dynaconf = "*"
 
 [dev-packages]
 ipython = "*"
