@@ -1,6 +1,7 @@
-NOTE: This is the "raw", "unoffical" summary that is proportional to chapter length. This particular thesis had a very uneven distribution of content amongst chapters, with some being only 1 page and others being 20+ pages.
+# NOTE: 
+This is the "raw", "unoffical" summary that is proportional to chapter length. This particular thesis had a very uneven distribution of content amongst chapters, with some being only 1 page and others being 20+ pages.
 
-Introduction
+### Introduction
 1.1 With the automotive industry rapidly pushing towards fully autonomous vehicles, an AVRP would be very useful for carrying out research on autonomous vehicles. Faculty at Virginia tech were interviewed to get a better understanding of what features researches would like to see in an AVRP. 
 1.2 Current Autonomous vehicles use an array of hardware that allow them to operate with the level of autonomy they were designed for. In 2007, multiple teams competed in the DARPA autonomous driving challenges, with CMU, the winning team, using HDR cameras, LIDAR and radar on competition vehicle. Virginia Tech also competed, and used LIDAR and cameras for perception with the vehicle completing the 60-mile course in about 6 hours. Among other attempts: Audi tried to implement a platform based entirely around perception, an ATV was used for arctic exploration, and a Brazilian platform used DGPS for positioning and LIDAR with cameras for obstacle detection. A VisLab team tried to make an autonomous vehicle look “normal” by integrating cameras, laser scanners and radar subtly into the vehicle’s architecture. Around 2009/2010, GUSS was built for the purpose of supporting infantry in the field.
 
@@ -8,10 +9,10 @@ This section focused on various attempts at autonomous vehicle implementations, 
 1.3 The goal of this thesis is to provide operational specifications for the development of a level 4 capable AVRP. Chapter 2 details systems specifications to develop an AVRP, chapter 3 dives into the hardware and perception of an AVRP and the supporting technology needed, Chapter 4 reviews the base vehicle research capabilities and contains a testing plan ideas for an AVRP, with Chapter 5 being the concluding Chapter. 
 
 
-Specifications
+###Specifications
 2.1 This section starts by laying out many of the interdisciplinary design needs for an AVRP which include vehicle communication, perception, and vehicle adapting to different environments. Vehicle communication will require a radio transmitter and transceiver, path following and object recognition will require cameras and sufficient processing hardware, ACC and CACC will require the use of radar and communication. Additionally, monitoring and collecting data will require access to the AVRP communication buses. The basic autonomous platform will require sensing hardware, GPS/INS, IMU, computers for perception processing, computers for route planning and obstacle avoidance, data storage, DBW system for vehicle input, and communication bus(es). A research platform will use a two-layer setup, hooks to connect additional computers, hooks to access communication buses, universal mounting racks and appropriate power outlets. 
 
-Design
+### Design
 3.0
 
 3.1 Drive by wire (DBW) is essential for an AVRP as it allows the AVRP to be fully functional in autonomous mode without any external manual controlling. Important DBW design specifications requires but is not limited to: steering torque, resolution of stressing throttle and brake, controller and motor accuracy, electronic slew rate, maximum speeds and accelerations, steering torque to disengage autonomy. 
@@ -23,10 +24,10 @@ Design
 3.7 Universal mounting racks on the front and rear of the vehicle can be slightly more difficult than roof top racks. Load considerations should be made when mounting items to the frame of the vehicle, and a visual inspection can be done to determine locations to bolt the brackets to. When installing mounting rocks, natural vibration of the racks will need to be considered for sensor mounting. 
 
 
-Verification
+### Verification
 The base sensor suite allows for the AVRP to perform the following capabilities without any user added sensors or hardware: text, sign, and signal recognition, ACC, blind spot detection, lane following, path following, obstacle detection, obstacle avoidance, emergency braking and stop-and-go-traffic. AVRPs require validation, and can be broken up into three pieces: software, hardware and overall system validation. Additional validation should include point-to-point testing, unprivileged admin access and running simulations. 
 
 
-Conclusion
+### Conclusion
 An AVRP must be develop on a need-driven basis which can be ascertained by interviewing potential future users. The base specs for an AVRP include a multilayer user system, ports to connect additional computers and devices, separate communication buses, universal mounting racks, an adequate sensor suite and an appropriate power source. The operational specifications laid out in this thesis are not limited simply to automobiles, which demonstrates the scalability and applicability of the AVRP. As this thesis is primarily focused on hardware, future work on software specifications is desirable. For hardware, the testing various models and brands of sensors should be carried out. 
 
