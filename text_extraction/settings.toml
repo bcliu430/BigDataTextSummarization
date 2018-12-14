@@ -1,0 +1,13 @@
+# Settings for Grobid Parser
+
+title = "Grobid Parser Settings"
+
+[default]
+log_level = "debug"
+log_handlers = [ "file" ]
+log_file = "grobid.log"
+error_file = "grobid.err"
+
+[production]
+log_level = "info"
+log_handlers = [ "file" ]
